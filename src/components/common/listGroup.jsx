@@ -6,14 +6,13 @@ const getListClass = (item, selectedItem) => {
   return Class;
 };
 
-const ListGroup = (props) => {
-  const {
-    items,
-    textProperty,
-    valueProperty,
-    onItemSelect,
-    selectedItem,
-  } = props;
+const ListGroup = ({
+  items,
+  textProperty,
+  valueProperty,
+  onItemSelect,
+  selectedItem,
+}) => {
   if (items.length === 0) return null;
   //   const keys = Object.keys(items[0]);
 
