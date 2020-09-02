@@ -1,7 +1,7 @@
 import React from "react";
 
 const getListClass = (item, selectedItem) => {
-  let Class = " list-group-item";
+  let Class = "clickable list-group-item";
   if (selectedItem === item) return (Class += " active");
   return Class;
 };
