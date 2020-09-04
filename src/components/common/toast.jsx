@@ -15,8 +15,7 @@ const Toast = ({ errors }) => {
             className="toast"
             role="alert"
             aria-live="assertive"
-            aria-atomic="true"
-          >
+            aria-atomic="true">
             <div className="toast-header">
               <strong className="mr-auto">{key}</strong>
               <small className="text-muted">2 seconds ago</small>
