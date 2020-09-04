@@ -6,13 +6,15 @@ import NavBar from "./components/navBar";
 import Customers from "./components/customers";
 import Rentals from "./components/rentals";
 import NotFound from "./components/notFound";
+import MovieForm from './components/movieForm';
 
 function App() {
   return (
-    <div>
+    <React.Fragment>
       <NavBar />
       <div className="content m-4 p-5">
         <Switch>
+          <Route path="/movies/:id" component={MovieForm} />
           <Route path="/movies" component={Movies} />
           <Route path="/customers" component={Customers} />
           <Route path="/rentals" component={Rentals} />
@@ -21,7 +23,7 @@ function App() {
           <Redirect to="/not-found" />
         </Switch>
       </div>
-    </div>
+    </React.Fragment>
   );
 }
 
