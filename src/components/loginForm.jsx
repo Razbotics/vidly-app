@@ -63,7 +63,6 @@ class LoginForm extends Component {
       },
     });
   };
-
   render() {
     const { account, errors } = this.state;
     return (
