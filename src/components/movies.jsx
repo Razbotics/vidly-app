@@ -82,14 +82,14 @@ class Movies extends Component {
 
     return (
       <div className="row">
-        <div className="tableWidth">
+        <div className="listWidth">
           <ListGroup
             onItemSelect={this.handleGenreSelect}
             selectedItem={selectedGenre}
             items={genres}
           />
         </div>
-        <div className="col-8">
+        <div className="tableWidth">
           {count === 0 ? (
             <p>There are no movies in database</p>
           ) : (
