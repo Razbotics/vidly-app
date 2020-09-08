@@ -8,7 +8,6 @@ const Input = ({ name, label, errors, ...rest }) => {
         {...rest}
         name={name}
         id={name}
-        placeholder={label}
         autoComplete="on"
         className="form-control"
       />

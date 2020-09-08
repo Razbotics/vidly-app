@@ -5,6 +5,7 @@ import MoviesTable from "./moviesTable";
 import { getGenres } from "../services/fakeGenreService";
 import { getMovies } from "../services/fakeMovieService";
 import { paginate } from "../utils/paginate";
+import { Link } from "react-router-dom";
 import _ from "lodash";
 
 class Movies extends Component {
@@ -88,6 +89,9 @@ class Movies extends Component {
             selectedItem={selectedGenre}
             items={genres}
           />
+          <Link to="/movies/new">
+            <button className="mt-3 btn btn-primary">New Movie</button>
+          </Link>
         </div>
         <div className="tableWidth">
           {count === 0 ? (
