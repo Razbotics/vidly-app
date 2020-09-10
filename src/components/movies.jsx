@@ -7,6 +7,7 @@ import { getMovies, deleteMovie } from "../services/fakeMovieService";
 import { paginate } from "../utils/paginate";
 import { Link } from "react-router-dom";
 import _ from "lodash";
+import Input from "./common/input";
 
 class Movies extends Component {
   state = {
@@ -16,6 +17,7 @@ class Movies extends Component {
     currentPage: 1,
     selectedGenre: "All",
     sortColumn: { path: "title", order: "asc" },
+    searchValue: "",
   };
 
   componentDidMount() {
@@ -26,7 +28,7 @@ class Movies extends Component {
   }
 
   handleGenreSelect = (genre) => {
-    this.setState({ selectedGenre: genre, currentPage: 1 });
+    this.setState({ selectedGenre: genre, currentPage: 1, searchValue: "" });
   };
 
   handleDelete = (movie) => {
@@ -50,6 +52,10 @@ class Movies extends Component {
     this.setState({ sortColumn });
   };
 
+  handleChange = ({ currentTarget: input }) => {
+    this.setState({ searchValue: input.value, selectedGenre: "All", currentPage: 1 });
+  };
+
   getPagedData = () => {
     const {
       pageSize,
@@ -57,12 +63,21 @@ class Movies extends Component {
       movies: allMovies,
       selectedGenre,
       sortColumn,
+      searchValue,
     } = this.state;
 
-    const filtered =
-      selectedGenre !== "All"
-        ? allMovies.filter((movie) => movie.genre.name === selectedGenre)
-        : allMovies;
+    let filtered;
+    if (searchValue) {
+      filtered = allMovies.filter((movie) => {
+        const title = movie.title;
+        return title.toLowerCase().startsWith(searchValue.toLowerCase());
+      });
+    } else {
+      filtered =
+        selectedGenre !== "All"
+          ? allMovies.filter((movie) => movie.genre.name === selectedGenre)
+          : allMovies;
+    }
 
     const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
 
@@ -78,6 +93,7 @@ class Movies extends Component {
       genres,
       selectedGenre,
       sortColumn,
+      searchValue,
     } = this.state;
 
     const { count, movies } = this.getPagedData();
@@ -95,6 +111,16 @@ class Movies extends Component {
           </Link>
         </div>
         <div className="tableWidth">
+          <Input
+            autoFocus={false}
+            placeholder={"Search..."}
+            name={"search"}
+            value={searchValue}
+            type={"text"}
+            label={null}
+            onChange={this.handleChange}
+            errors={null}
+          />
           {count === 0 ? (
             <p>There are no movies in database</p>
           ) : (
