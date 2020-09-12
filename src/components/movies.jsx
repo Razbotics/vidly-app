@@ -8,7 +8,7 @@ import { paginate } from "../utils/paginate";
 import { Link } from "react-router-dom";
 import _ from "lodash";
 import Input from "./common/input";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 class Movies extends Component {
   state = {
@@ -16,7 +16,7 @@ class Movies extends Component {
     genres: [],
     pageSize: 4,
     currentPage: 1,
-    selectedGenre: "All",
+    selectedGenre: "All Genres",
     sortColumn: { path: "title", order: "asc" },
     searchValue: "",
   };
@@ -24,9 +24,8 @@ class Movies extends Component {
   async componentDidMount() {
     this.setState({
       movies: await getMovies(),
-      genres: await getGenres(),
+      genres: [{ _id: "", name: "All Genres" }, ...(await getGenres())],
     });
-    toast.success("Got movies from database")
   }
 
   handleGenreSelect = (genre) => {
@@ -34,9 +33,19 @@ class Movies extends Component {
   };
 
   handleDelete = async (movie) => {
+    const originalMovies = [...this.state.movies];
     const movies = this.state.movies.filter((m) => m._id !== movie._id);
     this.setState({ movies });
-    await deleteMovie(movie._id);
+
+    try{
+      await deleteMovie(movie._id);
+      toast.warn("Movie has been deleted");
+    }
+    catch (error) {
+      if (error.response && error.response.status === 404)
+        toast.error("Movie has been already deleted");
+        this.setState({ movies: originalMovies });
+    }
   };
 
   handleLike = (movie) => {
@@ -57,7 +66,7 @@ class Movies extends Component {
   handleChange = ({ currentTarget: input }) => {
     this.setState({
       searchValue: input.value,
-      selectedGenre: "All",
+      selectedGenre: "All Genres",
       currentPage: 1,
     });
   };
@@ -80,7 +89,7 @@ class Movies extends Component {
       });
     } else {
       filtered =
-        selectedGenre !== "All"
+        selectedGenre !== "All Genres"
           ? allMovies.filter((movie) => movie.genre.name === selectedGenre)
           : allMovies;
     }

@@ -58,7 +58,6 @@ class MovieForm extends Form {
     history.push("/movies");
   };
 
-  /* {match.params.id} */
   render() {
     return (
       <div className="movieFormWidth">

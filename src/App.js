@@ -15,7 +15,6 @@ import "./App.css";
 function App() {
   return (
     <React.Fragment>
-      <ToastContainer />
       <NavBar />
       <div className="content m-4 p-5">
         <Switch>
@@ -30,6 +29,7 @@ function App() {
           <Redirect to="/not-found" />
         </Switch>
       </div>
+      <ToastContainer className="mt-5"/>
     </React.Fragment>
   );
 }

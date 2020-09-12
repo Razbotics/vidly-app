@@ -18,12 +18,6 @@ const ListGroup = ({
 
   return (
     <ul className="list-group">
-      <li
-        onClick={() => onItemSelect("All")}
-        className={getListClass("All", selectedItem)}
-      >
-        All Genres
-      </li>
       {items.map((item) => (
         <li
           onClick={() => onItemSelect(item[textProperty])}
