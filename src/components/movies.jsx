@@ -2,12 +2,13 @@ import React, { Component } from "react";
 import Pagination from "./common/pagination";
 import ListGroup from "./common/listGroup";
 import MoviesTable from "./moviesTable";
-import { getGenres } from "../services/fakeGenreService";
-import { getMovies, deleteMovie } from "../services/fakeMovieService";
+import { getGenres } from "../services/genreService";
+import { getMovies, deleteMovie } from "../services/movieService";
 import { paginate } from "../utils/paginate";
 import { Link } from "react-router-dom";
 import _ from "lodash";
 import Input from "./common/input";
+import { toast } from 'react-toastify';
 
 class Movies extends Component {
   state = {
@@ -20,21 +21,22 @@ class Movies extends Component {
     searchValue: "",
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     this.setState({
-      movies: getMovies(),
-      genres: getGenres(),
+      movies: await getMovies(),
+      genres: await getGenres(),
     });
+    toast.success("Got movies from database")
   }
 
   handleGenreSelect = (genre) => {
     this.setState({ selectedGenre: genre, currentPage: 1, searchValue: "" });
   };
 
-  handleDelete = (movie) => {
+  handleDelete = async (movie) => {
     const movies = this.state.movies.filter((m) => m._id !== movie._id);
-    deleteMovie(movie._id);
     this.setState({ movies });
+    await deleteMovie(movie._id);
   };
 
   handleLike = (movie) => {
@@ -53,7 +55,11 @@ class Movies extends Component {
   };
 
   handleChange = ({ currentTarget: input }) => {
-    this.setState({ searchValue: input.value, selectedGenre: "All", currentPage: 1 });
+    this.setState({
+      searchValue: input.value,
+      selectedGenre: "All",
+      currentPage: 1,
+    });
   };
 
   getPagedData = () => {
