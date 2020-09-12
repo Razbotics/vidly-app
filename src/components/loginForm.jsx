@@ -1,6 +1,8 @@
 import React from "react";
 import Joi from "joi-browser";
 import Form from "./common/form";
+import { login } from "../services/authService";
+import { toast } from "react-toastify";
 
 class LoginForm extends Form {
   state = {
@@ -16,14 +18,22 @@ class LoginForm extends Form {
     password: Joi.string().required().label("Password"),
   };
 
-  doSubmit = () => {
-    console.log("Submitted");
-    this.setState({
-      data: {
-        username: "",
-        password: "",
-      },
-    });
+  doSubmit = async () => {
+    const { username, password } = this.state.data;
+    try {
+      await login(username, password);
+      toast.success("Welcome to Vidly");
+      this.setState({
+        data: {
+          username: "",
+          password: "",
+          name: "",
+        },
+      });
+    } catch (error) {
+      if (error.response && error.response.status === 400)
+        toast.error("Invalid email or password");
+    }
   };
 
   render() {
