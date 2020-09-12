@@ -15,17 +15,15 @@ export async function getMovie(id) {
 }
 
 export async function saveMovie(movie) {
-  const id = movie.id;
-  delete movie["id"];
-
-  if (id === "new") {
-    const { data } = http.post(movieEndpoint, movie);
-    toast.success("Movie has been added");
+  if (movie._id) {
+    const body = { ...movie }
+    delete body._id;
+    const { data } = http.put(`${movieEndpoint}/${movie._id}`, body);
+    toast.success("Movie has been updated");
     return data;
   }
-  console.log(movie);
-  const { data } = http.put(`${movieEndpoint}/${id}`, movie);
-  toast.success("Movie has been updated");
+  const { data } = http.post(movieEndpoint, movie);
+  toast.success("Movie has been added");
   return data;
 }
 
