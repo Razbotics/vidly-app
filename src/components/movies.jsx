@@ -25,6 +25,7 @@ class Movies extends Component {
     const genres = [{ _id: "", name: "All Genres" }, ...(await getGenres())];
     const movies = await getMovies();
     this.setState({ movies, genres });
+    toast.success("Welcome to Vidly");
   }
 
   handleGenreSelect = (genre) => {

@@ -25,15 +25,11 @@ class RegisterForm extends Form {
 
   doSubmit = async () => {
     try {
-      await register(this.state.data);
+      const response = await register(this.state.data);
+      localStorage.setItem("token", response.headers["x-auth-token"]);
       toast.success("Registration successfull");
-      this.setState({
-        data: {
-          username: "",
-          password: "",
-          name: "",
-        },
-      });
+      this.props.history.push("/movies")
+
     } catch (error) {
       if (error.response && error.response.status === 400)
         toast.warn("User already registered");

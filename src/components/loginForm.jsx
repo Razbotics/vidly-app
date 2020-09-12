@@ -21,15 +21,9 @@ class LoginForm extends Form {
   doSubmit = async () => {
     const { username, password } = this.state.data;
     try {
-      await login(username, password);
-      toast.success("Welcome to Vidly");
-      this.setState({
-        data: {
-          username: "",
-          password: "",
-          name: "",
-        },
-      });
+      const { data } = await login(username, password);
+      localStorage.setItem("token", data);
+      window.location = "/movies";
     } catch (error) {
       if (error.response && error.response.status === 400)
         toast.error("Invalid email or password");
@@ -37,6 +31,9 @@ class LoginForm extends Form {
   };
 
   render() {
+    if (localStorage.getItem("token")) {
+      window.location = "/movies";
+    }
     return (
       <div className="loginWidth">
         <h1>Login</h1>
