@@ -22,10 +22,9 @@ class Movies extends Component {
   };
 
   async componentDidMount() {
-    this.setState({
-      movies: await getMovies(),
-      genres: [{ _id: "", name: "All Genres" }, ...(await getGenres())],
-    });
+    const genres = [{ _id: "", name: "All Genres" }, ...(await getGenres())];
+    const movies = await getMovies();
+    this.setState({ movies, genres });
   }
 
   handleGenreSelect = (genre) => {
@@ -37,14 +36,13 @@ class Movies extends Component {
     const movies = this.state.movies.filter((m) => m._id !== movie._id);
     this.setState({ movies });
 
-    try{
+    try {
       await deleteMovie(movie._id);
       toast.warn("Movie has been deleted");
-    }
-    catch (error) {
+    } catch (error) {
       if (error.response && error.response.status === 404)
         toast.error("Movie has been already deleted");
-        this.setState({ movies: originalMovies });
+      this.setState({ movies: originalMovies });
     }
   };
 
