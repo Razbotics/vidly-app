@@ -1,7 +1,7 @@
 import React from "react";
 import Joi from "joi-browser";
 import Form from "./common/form";
-import { login } from "../services/authService";
+import auth from "../services/authService";
 import { toast } from "react-toastify";
 
 class LoginForm extends Form {
@@ -21,8 +21,7 @@ class LoginForm extends Form {
   doSubmit = async () => {
     const { username, password } = this.state.data;
     try {
-      const { data } = await login(username, password);
-      localStorage.setItem("token", data);
+      await auth.login(username, password);
       window.location = "/movies";
     } catch (error) {
       if (error.response && error.response.status === 400)

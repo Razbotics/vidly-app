@@ -3,6 +3,7 @@ import Form from "./common/form";
 import Joi from "joi-browser";
 import { register } from "../services/userService";
 import { toast } from "react-toastify";
+import auth from "../services/authService";
 
 class RegisterForm extends Form {
   state = {
@@ -26,10 +27,9 @@ class RegisterForm extends Form {
   doSubmit = async () => {
     try {
       const response = await register(this.state.data);
-      localStorage.setItem("token", response.headers["x-auth-token"]);
+      auth.loginWithJwt(response.headers["x-auth-token"]);
       toast.success("Registration successfull");
-      this.props.history.push("/movies")
-
+      this.props.history.push("/movies");
     } catch (error) {
       if (error.response && error.response.status === 400)
         toast.warn("User already registered");

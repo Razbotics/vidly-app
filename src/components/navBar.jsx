@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
+import Dropdown from "./common/dropdown";
 
 const NavBar = ({ user }) => {
   return (
@@ -41,9 +42,13 @@ const NavBar = ({ user }) => {
               <NavLink className="nav-link" to="/rentals">
                 Rentals
               </NavLink>
-              <NavLink className="nav-link" to="/profile">
-                {user.name.split(" ")[0]}
-              </NavLink>
+              <Dropdown
+                label={user.name.split(" ")[0]}
+                dropdowns={[
+                  { label: "Profile", link: "/profile" },
+                  { label: "Logout", link: "/logout" },
+                ]}
+              />
             </React.Fragment>
           )}
         </div>
