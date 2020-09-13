@@ -22,13 +22,13 @@ class Movies extends Component {
   };
 
   async componentDidMount() {
-    if (this.props.location.state !== "/movies/:id"){
+    if (!this.props.location.state) {
       toast.success("Welcome to Vidly");
+      this.props.location.state = null;
     }
     const genres = [{ _id: "", name: "All Genres" }, ...(await getGenres())];
     const movies = await getMovies();
     this.setState({ movies, genres });
-    
   }
 
   handleGenreSelect = (genre) => {

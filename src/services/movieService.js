@@ -1,8 +1,7 @@
 import http from "./httpService";
-import config from "../config/config.json";
 import { toast } from "react-toastify";
 
-const movieEndpoint = config.apiEndpoint + "/movies";
+const movieEndpoint = "/movies";
 
 export async function getMovies() {
   const { data } = await http.get(movieEndpoint);
