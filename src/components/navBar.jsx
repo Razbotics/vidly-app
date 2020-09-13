@@ -1,8 +1,10 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import Dropdown from "./common/dropdown";
+import auth from "../services/authService"
 
-const NavBar = ({ user }) => {
+const NavBar = () => {
+  const user = auth.getCurrentUser();
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <Link to="/" className="navbar-brand">

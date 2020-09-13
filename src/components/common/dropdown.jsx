@@ -5,7 +5,7 @@ const Dropdown = ({ label, dropdowns }) => {
   return (
     <NavDropdown title={label} id="basic-nav-dropdown">
       {dropdowns.map((dropdown) => (
-        <NavDropdown.Item href={dropdown.link}>
+        <NavDropdown.Item key={dropdown.label} href={dropdown.link}>
           {dropdown.label}
         </NavDropdown.Item>
       ))}

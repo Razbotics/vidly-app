@@ -13,6 +13,8 @@ class LoginForm extends Form {
     errors: {},
   };
 
+  componentDidMount() {}
+
   schema = {
     username: Joi.string().required().label("Username"),
     password: Joi.string().required().label("Password"),
