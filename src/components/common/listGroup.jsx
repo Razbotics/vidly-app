@@ -1,4 +1,5 @@
 import React from "react";
+import { DropdownButton, Dropdown } from "react-bootstrap";
 
 const getListClass = (item, selectedItem) => {
   let Class = "clickable list-group-item";
@@ -12,22 +13,23 @@ const ListGroup = ({
   valueProperty,
   onItemSelect,
   selectedItem,
+  title
 }) => {
   if (items.length === 0) return null;
   //   const keys = Object.keys(items[0]);
 
   return (
-    <ul className="list-group">
+    <DropdownButton id="dropdown-split-variants-Success" variant="success" title={title}>
       {items.map((item) => (
-        <li
+        <Dropdown.Item
           onClick={() => onItemSelect(item[textProperty])}
           key={item[valueProperty]}
           className={getListClass(item[textProperty], selectedItem)}
         >
           {item[textProperty]}
-        </li>
+        </Dropdown.Item>
       ))}
-    </ul>
+    </DropdownButton>
   );
 };
 

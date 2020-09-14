@@ -116,18 +116,32 @@ class Movies extends Component {
     const { count, movies } = this.getPagedData();
 
     return (
-      <div className="row">
-        <div className="listWidth">
-          <ListGroup
-            onItemSelect={this.handleGenreSelect}
-            selectedItem={selectedGenre}
-            items={genres}
-          />
-          <Link to="/movies/new">
-            <button className="mt-3 btn btn-primary">New Movie</button>
-          </Link>
+      <div className="container ml-1">
+        <div className="row mb-2 tableWidth">
+          {count === 0 ? (
+            <h5>There are no movies in database</h5>
+          ) : (
+            <h5>There are {count} movies in database</h5>
+          )}
         </div>
-        <div className="tableWidth">
+
+        <div className="row mb-5 tableWidth">
+          <div className="mb-1 mr-2">
+            <Link to="/movies/new">
+              <button className="btn btn-primary">Add Movie</button>
+            </Link>
+          </div>
+          <div className="mr-2">
+            <ListGroup
+              title="Genre"
+              onItemSelect={this.handleGenreSelect}
+              selectedItem={selectedGenre}
+              items={genres}
+            />
+          </div>
+        </div>
+
+        <div className="row tableWidth">
           <Input
             autoFocus={false}
             placeholder={"Search..."}
@@ -138,11 +152,9 @@ class Movies extends Component {
             onChange={this.handleChange}
             errors={null}
           />
-          {count === 0 ? (
-            <p>There are no movies in database</p>
-          ) : (
-            <p>There are {count} movies in database</p>
-          )}
+        </div>
+
+        <div className="row tableWidth">
           <MoviesTable
             movies={movies}
             sortColumn={sortColumn}

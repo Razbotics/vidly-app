@@ -17,22 +17,17 @@ code {
   cursor: pointer;
 }
 
-.listWidth {
-  min-width: 5cm;
-  margin-right: 1cm;
-}
-
 .movieFormWidth {
-  min-width: 10cm;
-  width: 20cm;
+  min-width: 80%;
+  width: 100%;
 }
 
 .tableWidth {
-  min-width: 10cm;
-  width: 20cm;
+  min-width: 40%;
+  width: 80%;
 }
 
 .loginWidth {
-  min-width: 5cm;
-  width: 10cm;
+  min-width: 80%;
+  width: 100%;
 }
